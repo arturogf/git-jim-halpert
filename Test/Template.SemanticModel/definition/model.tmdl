@@ -10,7 +10,7 @@ annotation PBI_QueryOrder = ["Last Refreshed Date"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBIDesktopVersion = 2.131.1203.0 (24.07)
+annotation PBI_ProTooling = ["WebModelingEdit","TMDLView_Desktop"]
 
 ref table DateTableTemplate_a916228d-92aa-49ed-82e8-c08ac3ab365b
 ref table 'Last Refreshed Date'

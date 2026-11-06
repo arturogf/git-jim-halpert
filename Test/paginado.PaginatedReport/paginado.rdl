@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:wa="http://schemas.microsoft.com/sqlserver/reporting/webauthoring" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata" MustUnderstand="df">
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:wa="http://schemas.microsoft.com/sqlserver/reporting/webauthoring" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <wa:ThemeName>default</wa:ThemeName>
@@ -14,7 +14,7 @@
       <am:Name>WebAuthoring</am:Name>
       <am:Version>2026.11.1.2271</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2026-11-06T10:24:21.321Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2026-11-06T11:40:23.564Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <wa:FilterSelections>
     <wa:FilterSelection>
@@ -57,6 +57,78 @@
       <wa:FilterType>Basic</wa:FilterType>
       <wa:FilterOperator>NotIn</wa:FilterOperator>
     </wa:FilterSelection>
+    <wa:FilterSelection>
+      <wa:DataSourceName>dm_ventas</wa:DataSourceName>
+      <wa:DatasetName>DataSet1</wa:DatasetName>
+      <wa:EntityName>DimFecha</wa:EntityName>
+      <wa:PropertyName>Fecha</wa:PropertyName>
+      <wa:FilterType>Basic</wa:FilterType>
+      <wa:FilterOperator>NotIn</wa:FilterOperator>
+    </wa:FilterSelection>
+    <wa:FilterSelection>
+      <wa:DataSourceName>dm_ventas</wa:DataSourceName>
+      <wa:DatasetName>DataSet1</wa:DatasetName>
+      <wa:EntityName>DimFecha</wa:EntityName>
+      <wa:PropertyName>Anio</wa:PropertyName>
+      <wa:FilterType>Basic</wa:FilterType>
+      <wa:FilterOperator>NotIn</wa:FilterOperator>
+    </wa:FilterSelection>
+    <wa:FilterSelection>
+      <wa:DataSourceName>dm_ventas</wa:DataSourceName>
+      <wa:DatasetName>DataSet1</wa:DatasetName>
+      <wa:EntityName>DimFecha</wa:EntityName>
+      <wa:PropertyName>MesNumero</wa:PropertyName>
+      <wa:FilterType>Basic</wa:FilterType>
+      <wa:FilterOperator>NotIn</wa:FilterOperator>
+    </wa:FilterSelection>
+    <wa:FilterSelection>
+      <wa:DataSourceName>dm_ventas</wa:DataSourceName>
+      <wa:DatasetName>DataSet1</wa:DatasetName>
+      <wa:EntityName>DimFecha</wa:EntityName>
+      <wa:PropertyName>AnioMes</wa:PropertyName>
+      <wa:FilterType>Basic</wa:FilterType>
+      <wa:FilterOperator>NotIn</wa:FilterOperator>
+    </wa:FilterSelection>
+    <wa:FilterSelection>
+      <wa:DataSourceName>dm_ventas</wa:DataSourceName>
+      <wa:DatasetName>DataSet1</wa:DatasetName>
+      <wa:EntityName>DimFecha</wa:EntityName>
+      <wa:PropertyName>Trimestre</wa:PropertyName>
+      <wa:FilterType>Basic</wa:FilterType>
+      <wa:FilterOperator>NotIn</wa:FilterOperator>
+    </wa:FilterSelection>
+    <wa:FilterSelection>
+      <wa:DataSourceName>dm_ventas</wa:DataSourceName>
+      <wa:DatasetName>DataSet1</wa:DatasetName>
+      <wa:EntityName>DimSucursal</wa:EntityName>
+      <wa:PropertyName>SucursalId</wa:PropertyName>
+      <wa:FilterType>Basic</wa:FilterType>
+      <wa:FilterOperator>NotIn</wa:FilterOperator>
+    </wa:FilterSelection>
+    <wa:FilterSelection>
+      <wa:DataSourceName>dm_ventas</wa:DataSourceName>
+      <wa:DatasetName>DataSet1</wa:DatasetName>
+      <wa:EntityName>DimSucursal</wa:EntityName>
+      <wa:PropertyName>Sucursal</wa:PropertyName>
+      <wa:FilterType>Basic</wa:FilterType>
+      <wa:FilterOperator>NotIn</wa:FilterOperator>
+    </wa:FilterSelection>
+    <wa:FilterSelection>
+      <wa:DataSourceName>dm_ventas</wa:DataSourceName>
+      <wa:DatasetName>DataSet1</wa:DatasetName>
+      <wa:EntityName>DimSucursal</wa:EntityName>
+      <wa:PropertyName>Ciudad</wa:PropertyName>
+      <wa:FilterType>Basic</wa:FilterType>
+      <wa:FilterOperator>NotIn</wa:FilterOperator>
+    </wa:FilterSelection>
+    <wa:FilterSelection>
+      <wa:DataSourceName>dm_ventas</wa:DataSourceName>
+      <wa:DatasetName>DataSet1</wa:DatasetName>
+      <wa:EntityName>DimSucursal</wa:EntityName>
+      <wa:PropertyName>Estado</wa:PropertyName>
+      <wa:FilterType>Basic</wa:FilterType>
+      <wa:FilterOperator>NotIn</wa:FilterOperator>
+    </wa:FilterSelection>
   </wa:FilterSelections>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -73,13 +145,84 @@
       <Query>
         <DataSourceName>dm_ventas</DataSourceName>
         <CommandText>DEFINE VAR __DS0Core = 
-	SUMMARIZE(
-		'DimCliente',
-		'DimCliente'[ClienteId],
-		'DimCliente'[Cliente],
-		'DimCliente'[Ciudad],
-		'DimCliente'[Estado],
-		'DimCliente'[Segmento]
+	SELECTCOLUMNS(
+		KEEPFILTERS(
+			FILTER(
+				KEEPFILTERS(
+					SUMMARIZECOLUMNS(
+						'DimCliente'[ClienteId],
+						'DimCliente'[Cliente],
+						'DimCliente'[Ciudad],
+						'DimCliente'[Estado],
+						'DimCliente'[Segmento],
+						'DimFecha'[Fecha],
+						'DimFecha'[Anio],
+						'DimFecha'[MesNumero],
+						'DimFecha'[AnioMes],
+						'DimFecha'[Trimestre],
+						'DimSucursal'[SucursalId],
+						'DimSucursal'[Sucursal],
+						'DimSucursal'[Ciudad],
+						'DimSucursal'[Estado],
+						"CountRowsFactVentas", COUNTROWS('FactVentas')
+					)
+				),
+				OR(
+					OR(
+						OR(
+							OR(
+								OR(
+									OR(
+										OR(
+											OR(
+												OR(
+													OR(
+														OR(
+															OR(
+																OR(
+																	NOT(ISBLANK('DimCliente'[ClienteId])),
+																	NOT(ISBLANK('DimCliente'[Cliente]))
+																),
+																NOT(ISBLANK('DimCliente'[Ciudad]))
+															),
+															NOT(ISBLANK('DimCliente'[Estado]))
+														),
+														NOT(ISBLANK('DimCliente'[Segmento]))
+													),
+													NOT(ISBLANK('DimFecha'[Fecha]))
+												),
+												NOT(ISBLANK('DimFecha'[Anio]))
+											),
+											NOT(ISBLANK('DimFecha'[MesNumero]))
+										),
+										NOT(ISBLANK('DimFecha'[AnioMes]))
+									),
+									NOT(ISBLANK('DimFecha'[Trimestre]))
+								),
+								NOT(ISBLANK('DimSucursal'[SucursalId]))
+							),
+							NOT(ISBLANK('DimSucursal'[Sucursal]))
+						),
+						NOT(ISBLANK('DimSucursal'[Ciudad]))
+					),
+					NOT(ISBLANK('DimSucursal'[Estado]))
+				)
+			)
+		),
+		"'DimCliente'[ClienteId]", 'DimCliente'[ClienteId],
+		"'DimCliente'[Cliente]", 'DimCliente'[Cliente],
+		"'DimCliente'[Ciudad]", 'DimCliente'[Ciudad],
+		"'DimCliente'[Estado]", 'DimCliente'[Estado],
+		"'DimCliente'[Segmento]", 'DimCliente'[Segmento],
+		"'DimFecha'[Fecha]", 'DimFecha'[Fecha],
+		"'DimFecha'[Anio]", 'DimFecha'[Anio],
+		"'DimFecha'[MesNumero]", 'DimFecha'[MesNumero],
+		"'DimFecha'[AnioMes]", 'DimFecha'[AnioMes],
+		"'DimFecha'[Trimestre]", 'DimFecha'[Trimestre],
+		"'DimSucursal'[SucursalId]", 'DimSucursal'[SucursalId],
+		"'DimSucursal'[Sucursal]", 'DimSucursal'[Sucursal],
+		"'DimSucursal'[Ciudad]", 'DimSucursal'[Ciudad],
+		"'DimSucursal'[Estado]", 'DimSucursal'[Estado]
 	)
 
 EVALUATE
@@ -90,16 +233,96 @@ ORDER BY
 	'DimCliente'[Cliente],
 	'DimCliente'[Ciudad],
 	'DimCliente'[Estado],
-	'DimCliente'[Segmento]</CommandText>
+	'DimCliente'[Segmento],
+	'DimFecha'[Fecha],
+	'DimFecha'[Anio],
+	'DimFecha'[MesNumero],
+	'DimFecha'[AnioMes],
+	'DimFecha'[Trimestre],
+	'DimSucursal'[SucursalId],
+	'DimSucursal'[Sucursal],
+	'DimSucursal'[Ciudad],
+	'DimSucursal'[Estado]</CommandText>
         <wa:PreviewCommandText>DEFINE
 	VAR __DS0Core = 
-		SUMMARIZE(
-			'DimCliente',
-			'DimCliente'[ClienteId],
-			'DimCliente'[Cliente],
-			'DimCliente'[Ciudad],
-			'DimCliente'[Estado],
-			'DimCliente'[Segmento]
+		SELECTCOLUMNS(
+			KEEPFILTERS(
+				FILTER(
+					KEEPFILTERS(
+						SUMMARIZECOLUMNS(
+							'DimCliente'[ClienteId],
+							'DimCliente'[Cliente],
+							'DimCliente'[Ciudad],
+							'DimCliente'[Estado],
+							'DimCliente'[Segmento],
+							'DimFecha'[Fecha],
+							'DimFecha'[Anio],
+							'DimFecha'[MesNumero],
+							'DimFecha'[AnioMes],
+							'DimFecha'[Trimestre],
+							'DimSucursal'[SucursalId],
+							'DimSucursal'[Sucursal],
+							'DimSucursal'[Ciudad],
+							'DimSucursal'[Estado],
+							"CountRowsFactVentas", COUNTROWS('FactVentas')
+						)
+					),
+					OR(
+						OR(
+							OR(
+								OR(
+									OR(
+										OR(
+											OR(
+												OR(
+													OR(
+														OR(
+															OR(
+																OR(
+																	OR(
+																		NOT(ISBLANK('DimCliente'[ClienteId])),
+																		NOT(ISBLANK('DimCliente'[Cliente]))
+																	),
+																	NOT(ISBLANK('DimCliente'[Ciudad]))
+																),
+																NOT(ISBLANK('DimCliente'[Estado]))
+															),
+															NOT(ISBLANK('DimCliente'[Segmento]))
+														),
+														NOT(ISBLANK('DimFecha'[Fecha]))
+													),
+													NOT(ISBLANK('DimFecha'[Anio]))
+												),
+												NOT(ISBLANK('DimFecha'[MesNumero]))
+											),
+											NOT(ISBLANK('DimFecha'[AnioMes]))
+										),
+										NOT(ISBLANK('DimFecha'[Trimestre]))
+									),
+									NOT(ISBLANK('DimSucursal'[SucursalId]))
+								),
+								NOT(ISBLANK('DimSucursal'[Sucursal]))
+							),
+							NOT(ISBLANK('DimSucursal'[Ciudad]))
+						),
+						NOT(ISBLANK('DimSucursal'[Estado]))
+					)
+				)
+			),
+			"'DimCliente'[ClienteId]", 'DimCliente'[ClienteId],
+			"'DimCliente'[Cliente]", 'DimCliente'[Cliente],
+			"'DimCliente'[Ciudad]", 'DimCliente'[Ciudad],
+			"'DimCliente'[Estado]", 'DimCliente'[Estado],
+			"'DimCliente'[Segmento]", 'DimCliente'[Segmento],
+			"'DimFecha'[Fecha]", 'DimFecha'[Fecha],
+			"'DimFecha'[Anio]", 'DimFecha'[Anio],
+			"'DimFecha'[MesNumero]", 'DimFecha'[MesNumero],
+			"'DimFecha'[AnioMes]", 'DimFecha'[AnioMes],
+			"'DimFecha'[Trimestre]", 'DimFecha'[Trimestre],
+			"'DimSucursal'[SucursalId]", 'DimSucursal'[SucursalId],
+			"'DimSucursal'[Sucursal]", 'DimSucursal'[Sucursal],
+			"'DimSucursal'[Ciudad]", 'DimSucursal'[Ciudad],
+			"'DimSucursal'[Estado]", 'DimSucursal'[Estado]
 		)
 
 	VAR __DS0BodyLimited = 
@@ -115,6 +338,24 @@ ORDER BY
 			'DimCliente'[Estado],
 			1,
 			'DimCliente'[Segmento],
+			1,
+			'DimFecha'[Fecha],
+			1,
+			'DimFecha'[Anio],
+			1,
+			'DimFecha'[MesNumero],
+			1,
+			'DimFecha'[AnioMes],
+			1,
+			'DimFecha'[Trimestre],
+			1,
+			'DimSucursal'[SucursalId],
+			1,
+			'DimSucursal'[Sucursal],
+			1,
+			'DimSucursal'[Ciudad],
+			1,
+			'DimSucursal'[Estado],
 			1
 		)
 
@@ -126,7 +367,16 @@ ORDER BY
 	'DimCliente'[Cliente],
 	'DimCliente'[Ciudad],
 	'DimCliente'[Estado],
-	'DimCliente'[Segmento]</wa:PreviewCommandText>
+	'DimCliente'[Segmento],
+	'DimFecha'[Fecha],
+	'DimFecha'[Anio],
+	'DimFecha'[MesNumero],
+	'DimFecha'[AnioMes],
+	'DimFecha'[Trimestre],
+	'DimSucursal'[SucursalId],
+	'DimSucursal'[Sucursal],
+	'DimSucursal'[Ciudad],
+	'DimSucursal'[Estado]</wa:PreviewCommandText>
       </Query>
       <Fields>
         <Field Name="DimCliente_ClienteId">
@@ -144,6 +394,33 @@ ORDER BY
         <Field Name="DimCliente_Segmento">
           <DataField>DimCliente[Segmento]</DataField>
         </Field>
+        <Field Name="DimFecha_Fecha">
+          <DataField>DimFecha[Fecha]</DataField>
+        </Field>
+        <Field Name="DimFecha_Anio">
+          <DataField>DimFecha[Anio]</DataField>
+        </Field>
+        <Field Name="DimFecha_MesNumero">
+          <DataField>DimFecha[MesNumero]</DataField>
+        </Field>
+        <Field Name="DimFecha_AnioMes">
+          <DataField>DimFecha[AnioMes]</DataField>
+        </Field>
+        <Field Name="DimFecha_Trimestre">
+          <DataField>DimFecha[Trimestre]</DataField>
+        </Field>
+        <Field Name="DimSucursal_SucursalId">
+          <DataField>DimSucursal[SucursalId]</DataField>
+        </Field>
+        <Field Name="DimSucursal_Sucursal">
+          <DataField>DimSucursal[Sucursal]</DataField>
+        </Field>
+        <Field Name="DimSucursal_Ciudad">
+          <DataField>DimSucursal[Ciudad]</DataField>
+        </Field>
+        <Field Name="DimSucursal_Estado">
+          <DataField>DimSucursal[Estado]</DataField>
+        </Field>
       </Fields>
     </DataSet>
   </DataSets>
@@ -154,6 +431,33 @@ ORDER BY
           <Tablix Name="Tablix1">
             <TablixBody>
               <TablixColumns>
+                <TablixColumn>
+                  <Width>47.625mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>47.625mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>47.625mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>47.625mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>47.625mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>47.625mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>47.625mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>47.625mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>47.625mm</Width>
+                </TablixColumn>
                 <TablixColumn>
                   <Width>47.625mm</Width>
                 </TablixColumn>
@@ -214,6 +518,7 @@ ORDER BY
                               <Width>=Variables!Style_GridVerticalWeight.Value</Width>
                             </LeftBorder>
                             <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <FontFamily />
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>4pt</PaddingTop>
@@ -262,6 +567,7 @@ ORDER BY
                               <Width>=Variables!Style_GridVerticalWeight.Value</Width>
                             </LeftBorder>
                             <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <FontFamily />
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>4pt</PaddingTop>
@@ -310,6 +616,7 @@ ORDER BY
                               <Width>=Variables!Style_GridVerticalWeight.Value</Width>
                             </LeftBorder>
                             <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <FontFamily />
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>4pt</PaddingTop>
@@ -358,6 +665,7 @@ ORDER BY
                               <Width>=Variables!Style_GridVerticalWeight.Value</Width>
                             </LeftBorder>
                             <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <FontFamily />
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>4pt</PaddingTop>
@@ -379,6 +687,440 @@ ORDER BY
                               <TextRuns>
                                 <TextRun>
                                   <Value>Segmento</Value>
+                                  <Style>
+                                    <FontFamily>Segoe UI Semibold</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <Color>=Variables!Style_FontColorHeaders.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_OutlineColor.Value</Color>
+                              <Style>=If(Variables!Style_HeaderEnableBorderBottom.Value = "true", "Solid", "None")</Style>
+                              <Width>=If(Variables!Style_HeaderBorderBottomWeight.Value = "",             Variables!Style_GridHorizontalWeight.Value, Variables!Style_HeaderBorderBottomWeight.Value)</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <FontFamily />
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>4pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox7098a3b162804e39a511b94a06f9f5da">
+                          <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!DimFecha_Fecha.Value</SortExpression>
+                          </UserSort>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Fecha</Value>
+                                  <Style>
+                                    <FontFamily>Segoe UI Semibold</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <Format>dd/MM/yyyy</Format>
+                                    <Color>=Variables!Style_FontColorHeaders.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_OutlineColor.Value</Color>
+                              <Style>=If(Variables!Style_HeaderEnableBorderBottom.Value = "true", "Solid", "None")</Style>
+                              <Width>=If(Variables!Style_HeaderBorderBottomWeight.Value = "",             Variables!Style_GridHorizontalWeight.Value, Variables!Style_HeaderBorderBottomWeight.Value)</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>4pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textboxe1193e1d8ea9448e98c9efa270e2ca2a">
+                          <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!DimFecha_Anio.Value</SortExpression>
+                          </UserSort>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Anio</Value>
+                                  <Style>
+                                    <FontFamily>Segoe UI Semibold</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <Color>=Variables!Style_FontColorHeaders.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_OutlineColor.Value</Color>
+                              <Style>=If(Variables!Style_HeaderEnableBorderBottom.Value = "true", "Solid", "None")</Style>
+                              <Width>=If(Variables!Style_HeaderBorderBottomWeight.Value = "",             Variables!Style_GridHorizontalWeight.Value, Variables!Style_HeaderBorderBottomWeight.Value)</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>4pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox7f8015c8391f4ea68d129c8072113723">
+                          <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!DimFecha_MesNumero.Value</SortExpression>
+                          </UserSort>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>MesNumero</Value>
+                                  <Style>
+                                    <FontFamily>Segoe UI Semibold</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <Color>=Variables!Style_FontColorHeaders.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_OutlineColor.Value</Color>
+                              <Style>=If(Variables!Style_HeaderEnableBorderBottom.Value = "true", "Solid", "None")</Style>
+                              <Width>=If(Variables!Style_HeaderBorderBottomWeight.Value = "",             Variables!Style_GridHorizontalWeight.Value, Variables!Style_HeaderBorderBottomWeight.Value)</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>4pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox6e824d3cf3334de28ad08e823c710ade">
+                          <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!DimFecha_AnioMes.Value</SortExpression>
+                          </UserSort>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>AnioMes</Value>
+                                  <Style>
+                                    <FontFamily>Segoe UI Semibold</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <Color>=Variables!Style_FontColorHeaders.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_OutlineColor.Value</Color>
+                              <Style>=If(Variables!Style_HeaderEnableBorderBottom.Value = "true", "Solid", "None")</Style>
+                              <Width>=If(Variables!Style_HeaderBorderBottomWeight.Value = "",             Variables!Style_GridHorizontalWeight.Value, Variables!Style_HeaderBorderBottomWeight.Value)</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>4pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textboxe8d0894444604c9aa3ef08934681c66a">
+                          <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!DimFecha_Trimestre.Value</SortExpression>
+                          </UserSort>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Trimestre</Value>
+                                  <Style>
+                                    <FontFamily>Segoe UI Semibold</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <Color>=Variables!Style_FontColorHeaders.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_OutlineColor.Value</Color>
+                              <Style>=If(Variables!Style_HeaderEnableBorderBottom.Value = "true", "Solid", "None")</Style>
+                              <Width>=If(Variables!Style_HeaderBorderBottomWeight.Value = "",             Variables!Style_GridHorizontalWeight.Value, Variables!Style_HeaderBorderBottomWeight.Value)</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>4pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox556146c8a1324ad69e3caa35bd9bbc96">
+                          <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!DimSucursal_SucursalId.Value</SortExpression>
+                          </UserSort>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>SucursalId</Value>
+                                  <Style>
+                                    <FontFamily>Segoe UI Semibold</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <Color>=Variables!Style_FontColorHeaders.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_OutlineColor.Value</Color>
+                              <Style>=If(Variables!Style_HeaderEnableBorderBottom.Value = "true", "Solid", "None")</Style>
+                              <Width>=If(Variables!Style_HeaderBorderBottomWeight.Value = "",             Variables!Style_GridHorizontalWeight.Value, Variables!Style_HeaderBorderBottomWeight.Value)</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>4pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textboxe4f229a73a4942fd9b3b712bae47f50c">
+                          <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!DimSucursal_Sucursal.Value</SortExpression>
+                          </UserSort>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Sucursal</Value>
+                                  <Style>
+                                    <FontFamily>Segoe UI Semibold</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <Color>=Variables!Style_FontColorHeaders.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_OutlineColor.Value</Color>
+                              <Style>=If(Variables!Style_HeaderEnableBorderBottom.Value = "true", "Solid", "None")</Style>
+                              <Width>=If(Variables!Style_HeaderBorderBottomWeight.Value = "",             Variables!Style_GridHorizontalWeight.Value, Variables!Style_HeaderBorderBottomWeight.Value)</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>4pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox75c8acc865a8481c9fed0c093f75de39">
+                          <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!DimSucursal_Ciudad.Value</SortExpression>
+                          </UserSort>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Ciudad</Value>
+                                  <Style>
+                                    <FontFamily>Segoe UI Semibold</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <Color>=Variables!Style_FontColorHeaders.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_OutlineColor.Value</Color>
+                              <Style>=If(Variables!Style_HeaderEnableBorderBottom.Value = "true", "Solid", "None")</Style>
+                              <Width>=If(Variables!Style_HeaderBorderBottomWeight.Value = "",             Variables!Style_GridHorizontalWeight.Value, Variables!Style_HeaderBorderBottomWeight.Value)</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=Variables!Style_BackColorHeaders.Value</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>4pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox3632fa59947540c7b6756b4ca09b602c">
+                          <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!DimSucursal_Estado.Value</SortExpression>
+                          </UserSort>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Estado</Value>
                                   <Style>
                                     <FontFamily>Segoe UI Semibold</FontFamily>
                                     <FontSize>11pt</FontSize>
@@ -455,6 +1197,7 @@ ORDER BY
                               <Width>=Variables!Style_GridVerticalWeight.Value</Width>
                             </LeftBorder>
                             <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <FontFamily />
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>5pt</PaddingRight>
                             <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
@@ -499,6 +1242,7 @@ ORDER BY
                               <Width>=Variables!Style_GridVerticalWeight.Value</Width>
                             </LeftBorder>
                             <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <FontFamily />
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>5pt</PaddingRight>
                             <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
@@ -543,6 +1287,7 @@ ORDER BY
                               <Width>=Variables!Style_GridVerticalWeight.Value</Width>
                             </LeftBorder>
                             <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <FontFamily />
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>5pt</PaddingRight>
                             <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
@@ -587,6 +1332,7 @@ ORDER BY
                               <Width>=Variables!Style_GridVerticalWeight.Value</Width>
                             </LeftBorder>
                             <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <FontFamily />
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>5pt</PaddingRight>
                             <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
@@ -613,6 +1359,404 @@ ORDER BY
                             </Paragraph>
                           </Paragraphs>
                           <DataElementName>DimCliente_Segmento</DataElementName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridHorizontalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridHorizontalWeight.Value</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <FontFamily />
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>5pt</PaddingRight>
+                            <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
+                            <PaddingBottom>=Variables!Style_RowPadding.Value</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textboxd3e58e68dc7848e19f620feca7972762">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!DimFecha_Fecha.Value</Value>
+                                  <Style>
+                                    <Format>dd/MM/yyyy</Format>
+                                    <Color>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_FontColorValues1.Value, Variables!Style_FontColorValues2.Value)</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <DataElementName>DimFecha_Fecha</DataElementName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridHorizontalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridHorizontalWeight.Value</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>5pt</PaddingRight>
+                            <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
+                            <PaddingBottom>=Variables!Style_RowPadding.Value</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox8adb9b74034543989781d08ffb9c5556">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!DimFecha_Anio.Value</Value>
+                                  <Style>
+                                    <Color>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_FontColorValues1.Value, Variables!Style_FontColorValues2.Value)</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <DataElementName>DimFecha_Anio</DataElementName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridHorizontalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridHorizontalWeight.Value</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>5pt</PaddingRight>
+                            <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
+                            <PaddingBottom>=Variables!Style_RowPadding.Value</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox50d9b9c6c6b04a8ab64fe5ace1409784">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!DimFecha_MesNumero.Value</Value>
+                                  <Style>
+                                    <Color>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_FontColorValues1.Value, Variables!Style_FontColorValues2.Value)</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <DataElementName>DimFecha_MesNumero</DataElementName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridHorizontalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridHorizontalWeight.Value</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>5pt</PaddingRight>
+                            <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
+                            <PaddingBottom>=Variables!Style_RowPadding.Value</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textboxad5117de3e68410999e6595b43498ead">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!DimFecha_AnioMes.Value</Value>
+                                  <Style>
+                                    <Color>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_FontColorValues1.Value, Variables!Style_FontColorValues2.Value)</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <DataElementName>DimFecha_AnioMes</DataElementName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridHorizontalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridHorizontalWeight.Value</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>5pt</PaddingRight>
+                            <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
+                            <PaddingBottom>=Variables!Style_RowPadding.Value</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox286046697b944dd7ae1b8b6a59ade2a1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!DimFecha_Trimestre.Value</Value>
+                                  <Style>
+                                    <Color>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_FontColorValues1.Value, Variables!Style_FontColorValues2.Value)</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <DataElementName>DimFecha_Trimestre</DataElementName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridHorizontalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridHorizontalWeight.Value</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>5pt</PaddingRight>
+                            <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
+                            <PaddingBottom>=Variables!Style_RowPadding.Value</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox14ea1bc4396d4b6dbe34fb9c60937917">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!DimSucursal_SucursalId.Value</Value>
+                                  <Style>
+                                    <Color>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_FontColorValues1.Value, Variables!Style_FontColorValues2.Value)</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <DataElementName>DimSucursal_SucursalId</DataElementName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridHorizontalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridHorizontalWeight.Value</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>5pt</PaddingRight>
+                            <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
+                            <PaddingBottom>=Variables!Style_RowPadding.Value</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox29d8d1934cab4ade9cc4024a8140926c">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!DimSucursal_Sucursal.Value</Value>
+                                  <Style>
+                                    <Color>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_FontColorValues1.Value, Variables!Style_FontColorValues2.Value)</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <DataElementName>DimSucursal_Sucursal</DataElementName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridHorizontalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridHorizontalWeight.Value</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>5pt</PaddingRight>
+                            <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
+                            <PaddingBottom>=Variables!Style_RowPadding.Value</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox80b013047d4b47e39ebe961c8e48ec88">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!DimSucursal_Ciudad.Value</Value>
+                                  <Style>
+                                    <Color>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_FontColorValues1.Value, Variables!Style_FontColorValues2.Value)</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <DataElementName>DimSucursal_Ciudad</DataElementName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridHorizontalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridHorizontalWeight.Value</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Color>=Variables!Style_GridColor.Value</Color>
+                              <Style>=If(Variables!Style_GridVerticalEnabledTable.Value = "true", "Solid", "None")</Style>
+                              <Width>=Variables!Style_GridVerticalWeight.Value</Width>
+                            </LeftBorder>
+                            <BackgroundColor>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_BackColorValues1.Value, Variables!Style_BackColorValues2.Value)</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>5pt</PaddingRight>
+                            <PaddingTop>=Variables!Style_RowPadding.Value</PaddingTop>
+                            <PaddingBottom>=Variables!Style_RowPadding.Value</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox3ac1c75f0035443ca0ff3faa2e9775f1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!DimSucursal_Estado.Value</Value>
+                                  <Style>
+                                    <Color>=If(RowNumber(Nothing) Mod 2 &lt;&gt; 0, Variables!Style_FontColorValues1.Value, Variables!Style_FontColorValues2.Value)</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <DataElementName>DimSucursal_Estado</DataElementName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -668,11 +1812,65 @@ ORDER BY
                   <wa:PropertyName>Segmento</wa:PropertyName>
                   <wa:Aggregate>None</wa:Aggregate>
                 </wa:FieldSelection>
+                <wa:FieldSelection>
+                  <wa:EntityName>DimFecha</wa:EntityName>
+                  <wa:PropertyName>Fecha</wa:PropertyName>
+                  <wa:Aggregate>None</wa:Aggregate>
+                </wa:FieldSelection>
+                <wa:FieldSelection>
+                  <wa:EntityName>DimFecha</wa:EntityName>
+                  <wa:PropertyName>Anio</wa:PropertyName>
+                  <wa:Aggregate>None</wa:Aggregate>
+                </wa:FieldSelection>
+                <wa:FieldSelection>
+                  <wa:EntityName>DimFecha</wa:EntityName>
+                  <wa:PropertyName>MesNumero</wa:PropertyName>
+                  <wa:Aggregate>None</wa:Aggregate>
+                </wa:FieldSelection>
+                <wa:FieldSelection>
+                  <wa:EntityName>DimFecha</wa:EntityName>
+                  <wa:PropertyName>AnioMes</wa:PropertyName>
+                  <wa:Aggregate>None</wa:Aggregate>
+                </wa:FieldSelection>
+                <wa:FieldSelection>
+                  <wa:EntityName>DimFecha</wa:EntityName>
+                  <wa:PropertyName>Trimestre</wa:PropertyName>
+                  <wa:Aggregate>None</wa:Aggregate>
+                </wa:FieldSelection>
+                <wa:FieldSelection>
+                  <wa:EntityName>DimSucursal</wa:EntityName>
+                  <wa:PropertyName>SucursalId</wa:PropertyName>
+                  <wa:Aggregate>None</wa:Aggregate>
+                </wa:FieldSelection>
+                <wa:FieldSelection>
+                  <wa:EntityName>DimSucursal</wa:EntityName>
+                  <wa:PropertyName>Sucursal</wa:PropertyName>
+                  <wa:Aggregate>None</wa:Aggregate>
+                </wa:FieldSelection>
+                <wa:FieldSelection>
+                  <wa:EntityName>DimSucursal</wa:EntityName>
+                  <wa:PropertyName>Ciudad</wa:PropertyName>
+                  <wa:Aggregate>None</wa:Aggregate>
+                </wa:FieldSelection>
+                <wa:FieldSelection>
+                  <wa:EntityName>DimSucursal</wa:EntityName>
+                  <wa:PropertyName>Estado</wa:PropertyName>
+                  <wa:Aggregate>None</wa:Aggregate>
+                </wa:FieldSelection>
               </wa:FieldSelections>
               <wa:ShowGrandTotals>true</wa:ShowGrandTotals>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -698,7 +1896,7 @@ ORDER BY
         </ReportItems>
         <Height>2.25in</Height>
       </Body>
-      <Width>238.125mm</Width>
+      <Width>666.75mm</Width>
       <Page>
         <LeftMargin>0.5in</LeftMargin>
         <RightMargin>0.5in</RightMargin>
