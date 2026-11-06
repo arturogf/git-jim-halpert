@@ -1,0 +1,5 @@
+relationship 8956336b-c355-483d-93d6-8ae7d58a21b0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Last Refreshed Date'.'Date Last Refreshed'
+	toColumn: LocalDateTable_2378c364-914a-48ca-9677-f0478016a3bf.Date
+
